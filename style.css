@@ -112,33 +112,6 @@ body {
   gap: 8px;
   flex-shrink: 0;
 }
-.user-email {
-  font-size: 13px;
-  color: var(--text-secondary);
-  max-width: 140px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.logout-btn {
-  padding: 5px 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--card-bg);
-  color: var(--text-secondary);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-.logout-btn:hover {
-  border-color: #ef4444;
-  color: #ef4444;
-  background: #fef2f2;
-}
-[data-theme="dark"] .logout-btn:hover {
-  background: #450a0a;
-}
 .theme-btn, .menu-btn {
   width: 40px; height: 40px;
   border: 1px solid var(--border);
