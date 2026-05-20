@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>诊断学复习 - 医学生助手</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">⚕️</span>
+        <span class="logo-text">诊断学复习</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#symptoms" class="nav-item" data-module="symptoms">常见症状</a>
+        <a href="#physical" class="nav-item" data-module="physical">体格检查</a>
+        <a href="#lab" class="nav-item" data-module="lab">实验室检查</a>
+        <a href="#ecg" class="nav-item" data-module="ecg">心电图</a>
+        <a href="#imaging" class="nav-item" data-module="imaging">影像学检查</a>
+        <a href="#reasoning" class="nav-item" data-module="reasoning">诊断思维</a>
+        <a href="#quiz" class="nav-item quiz-nav-item" data-module="quiz">📝 刷题</a>
+      </nav>
+      <div class="header-actions">
+        <span class="user-email" id="userEmail"></span>
+        <button class="logout-btn" id="logoutBtn">退出</button>
+        <button class="theme-btn" id="themeToggle" aria-label="切换主题">🌙</button>
+        <button class="menu-btn" id="menuToggle" aria-label="菜单">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 搜索栏 -->
+  <div class="search-bar">
+    <div class="search-inner">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索知识点（如：发热、血常规、ST段...）">
+      <button class="search-clear" id="searchClear" aria-label="清除">✕</button>
+    </div>
+  </div>
+
+  <!-- 主内容区 -->
+  <main class="main" id="mainContent">
+    <!-- 欢迎页面 -->
+    <div class="welcome" id="welcome">
+      <div class="welcome-icon">📖</div>
+      <h1>诊断学复习助手</h1>
+      <p class="welcome-sub">选择上方模块开始复习，或使用搜索框查找知识点</p>
+      <div class="welcome-stats" id="welcomeStats">
+        <div class="stat-item">
+          <span class="stat-num" id="totalCards">0</span>
+          <span class="stat-label">总知识点</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="studiedCards">0</span>
+          <span class="stat-label">已学习</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="favoriteCards">0</span>
+          <span class="stat-label">已收藏</span>
+        </div>
+      </div>
+      <div class="welcome-modules" id="welcomeModules"></div>
+    </div>
+
+    <!-- 模块内容 -->
+    <div class="module-content" id="moduleContent" style="display:none;">
+      <div class="module-header">
+        <h2 class="module-title" id="moduleTitle"></h2>
+        <div class="module-progress">
+          <span class="progress-text" id="progressText">0/0</span>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cards-container" id="cardsContainer"></div>
+    </div>
+
+    <!-- 刷题区域 -->
+    <div class="quiz-area" id="quizArea" style="display:none;">
+      <div class="quiz-header">
+        <div class="quiz-filter">
+          <button class="quiz-filter-btn active" data-filter="all">全部</button>
+          <button class="quiz-filter-btn" data-filter="single">单选题</button>
+          <button class="quiz-filter-btn" data-filter="multi">多选题</button>
+          <button class="quiz-filter-btn" data-filter="fill">填空题</button>
+          <button class="quiz-filter-btn" data-filter="short">简答题</button>
+        </div>
+        <div class="quiz-controls">
+          <button class="quiz-btn shuffle-btn" id="shuffleBtn">🔀 随机</button>
+          <button class="quiz-btn reset-btn" id="resetBtn">🔄 重置</button>
+        </div>
+      </div>
+      <div class="quiz-stats-bar">
+        <span class="quiz-progress-text" id="quizProgressText">0/0</span>
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quizProgressFill"></div>
+        </div>
+        <span class="quiz-score" id="quizScore">正确率: 0%</span>
+      </div>
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-card-header">
+          <span class="quiz-qtype" id="quizQtype">单选题</span>
+          <span class="quiz-qnum" id="quizQnum">第 1 题</span>
+        </div>
+        <div class="quiz-stem" id="quizStem"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-input-area" id="quizInputArea" style="display:none;">
+          <input type="text" class="quiz-input" id="quizInput" placeholder="请输入你的答案...">
+          <button class="quiz-btn submit-btn" id="submitInputBtn">提交</button>
+        </div>
+        <div class="quiz-answer-area" id="quizAnswerArea">
+          <div class="quiz-result" id="quizResult"></div>
+          <div class="quiz-explanation" id="quizExplanation"></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="quiz-btn prev-btn" id="prevBtn">◀ 上一题</button>
+          <button class="quiz-btn reveal-btn" id="revealBtn">👁 显示答案</button>
+          <button class="quiz-btn next-btn" id="nextBtn">下一题 ▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 搜索结果 -->
+    <div class="search-results" id="searchResults" style="display:none;">
+      <div class="search-results-header">
+        <h3>搜索结果 <span id="searchCount"></span></h3>
+      </div>
+      <div class="cards-container" id="searchCardsContainer"></div>
+    </div>
+  </main>
+
+  <!-- 收藏抽屉 -->
+  <div class="favorites-drawer" id="favoritesDrawer">
+    <div class="drawer-header">
+      <h3>⭐ 我的收藏</h3>
+      <button class="drawer-close" id="drawerClose">✕</button>
+    </div>
+    <div class="drawer-body" id="drawerBody">
+      <p class="empty-msg" id="emptyFav">暂无收藏，浏览时点击卡片上的 ⭐ 收藏</p>
+    </div>
+  </div>
+
+  <!-- 浮动按钮 -->
+  <button class="fab" id="fabFavorites" aria-label="收藏">⭐ <span class="fab-badge" id="favBadge">0</span></button>
+
+  <script src="quiz-data.js"></script>
+  <script src="quiz.js"></script>
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
